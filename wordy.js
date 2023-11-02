@@ -1,8 +1,12 @@
-//
-// This is only a SKELETON file for the 'Wordy' exercise. It's been provided as a
-// convenience to get you started writing code faster.
-//
+export const answer = (string) => {
+  // Find the first number
+  // Find the operator
+  // Find the second number
 
-export const answer = () => {
-  throw new Error('Remove this statement and implement this function');
+  // String starts with 'What is', first number follows, if not a number, throw error
+  // us indexOf("What is"), test what the output is, use the index to slice out what is
+
+  const removeQuestion = string.replace(/What is /g, "");
+  const removeQuestionMark = removeQuestion.replace(/\?/g, "");
+  return parseInt(removeQuestionMark);
 };
