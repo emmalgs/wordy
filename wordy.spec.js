@@ -67,17 +67,17 @@ describe('Wordy', () => {
     );
   });
 
-  xtest('Non math question', () => {
+  test('Non math question', () => {
     expect(() => answer('Who is the President of the United States?')).toThrow(
       new Error('Unknown operation'),
     );
   });
 
-  xtest('reject problem missing an operand', () => {
+  test('reject problem missing an operand', () => {
     expect(() => answer('What is 1 plus?')).toThrow(new Error('Syntax error'));
   });
 
-  xtest('reject problem with no operands or operators', () => {
+  test('reject problem with no operands or operators', () => {
     expect(() => answer('What is?')).toThrow(new Error('Syntax error'));
   });
 
@@ -87,7 +87,7 @@ describe('Wordy', () => {
     );
   });
 
-  xtest('reject two numbers in a row', () => {
+  test('reject two numbers in a row', () => {
     expect(() => answer('What is 1 plus 2 1?')).toThrow(
       new Error('Syntax error'),
     );
