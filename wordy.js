@@ -1,58 +1,72 @@
 export const answer = (string) => {
-  // Find the first number
-  // Find the operator
-  // Find the second number
-
-  // String starts with 'What is', first number follows, if not a number, throw error
-  // us indexOf("What is"), test what the output is, use the index to slice out what is
-
   const removeQuestion = string.replace(/What is /g, "");
   const removeQuestionMark = removeQuestion.replace(/\?/g, "");
   const mathProblemArray = removeQuestionMark
     .split("")
     .filter((char) => char !== " ");
-  let num1;
-  let num2;
-  let operand = "";
-  let solution;
+  const mathArray = getNumbersAndOperatorsArray(mathProblemArray);
 
-  for (let i = 0; i < mathProblemArray.length; i++) {
-    if (isNaN(parseInt(mathProblemArray[i])) && mathProblemArray[i] !== '-') {
-      operand += mathProblemArray[i];
+  return mathmatize(mathArray);
+};
+
+const getNumbersAndOperatorsArray = (array) => {
+  let result = [];
+  let currentGroup = [];
+
+  for (const char of array) {
+    if (char === "-" && isNaN(parseInt(currentGroup[0]))) {
+      if (currentGroup.join("") === "") {
+        currentGroup = [char];
+      } else {
+        result.push(currentGroup.join(""));
+        currentGroup = [char];
+      }
+    } else if (isNaN(parseInt(char)) && currentGroup.length === 0) {
+      currentGroup.push(char);
+    } else if (!isNaN(parseInt(char)) && currentGroup.length === 0) {
+      currentGroup.push(char);
+    } else if (
+      isNaN(parseInt(char)) &&
+      isNaN(parseInt(currentGroup.join("")))
+    ) {
+      currentGroup.push(char);
+    } else if (
+      !isNaN(parseInt(char)) &&
+      (!isNaN(parseInt(currentGroup.join(""))) || currentGroup[0] === "-")
+    ) {
+      currentGroup.push(char);
+    } else {
+      result.push(currentGroup.join(""));
+      currentGroup = [char];
     }
   }
-  // so we know that the last letter of the operand + 1 can help us find the starting index of the second num, and the starting index of the array to the first letter of the operand - 1 will give us the first num
-
-  // check if there is an operand, if not, parseInt number
-  const indexOfNum1End = mathProblemArray.indexOf(operand[0]);
-  const indexOfNum2Start = mathProblemArray.indexOf(operand[operand.length - 1]) + 1;
-
-  if (operand === "") {
-    num1 = parseInt(mathProblemArray.join(""));
-  } else {
-    num1 = parseInt(mathProblemArray.slice(0, indexOfNum1End).join(""));
-    num2 = parseInt(
-      mathProblemArray
-        .slice(indexOfNum2Start, mathProblemArray.length)
-        .join(""));
+  if (currentGroup.length > 0) {
+    result.push(currentGroup.join(""));
   }
 
-  switch (operand) {
-    case "":
-      solution = num1;
-      break;
-    case "plus":
-      solution = num1 + num2;
-      break;
-    case "minus":
-      solution = num1 - num2;
-      break;
-    case "multipliedby":
-      solution = num1 * num2;
-      break;
-    default:
-      break;
-  }
+  return result;
+};
 
-  return solution;
+const mathmatize = (array) => {
+  let solution = parseInt(array[0]);
+  let currentOperation = null;
+
+  array.forEach((el) => {
+    if (!isNaN(parseInt(el))) {
+      if (currentOperation === "plus") {
+        solution += parseInt(el);
+      } else if (currentOperation === "minus") {
+        solution -= parseInt(el);
+      } else if (currentOperation === "multipliedby") {
+        solution *= parseInt(el);
+      } else if (currentOperation === "dividedby") {
+        solution /= parseInt(el);
+      }
+      console.log(currentOperation)
+    } else if (isNaN(parseInt(el))) {
+      currentOperation = el;
+    }
+  });
+
+  return parseInt(solution)
 };

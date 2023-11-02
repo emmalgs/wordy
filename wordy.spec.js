@@ -29,11 +29,11 @@ describe('Wordy', () => {
     expect(answer('What is -3 multiplied by 25?')).toEqual(-75);
   });
 
-  xtest('division', () => {
+  test('division', () => {
     expect(answer('What is 33 divided by -3?')).toEqual(-11);
   });
 
-  xtest('multiple additions', () => {
+  test('multiple additions', () => {
     expect(answer('What is 1 plus 1 plus 1?')).toEqual(3);
   });
 
