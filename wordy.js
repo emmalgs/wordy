@@ -12,19 +12,24 @@ const mathmatize = (array) => {
   let solution = parseInt(array[0]);
   let currentOperation = null;
 
-  array.forEach((el) => {
-    if (!isNaN(parseInt(el))) {
-      if (currentOperation === "plus") {
-        solution += parseInt(el);
-      } else if (currentOperation === "minus") {
-        solution -= parseInt(el);
-      } else if (currentOperation === "multiplied") {
-        solution *= parseInt(el);
-      } else if (currentOperation === "divided") {
-        solution /= parseInt(el);
+  array.forEach((el, i) => {
+    console.log(checkForRejects(el, array[i + 1]))
+    if (checkForRejects(el, array[i + 1])) {
+      if (!isNaN(parseInt(el))) {
+        if (currentOperation === "plus") {
+          solution += parseInt(el);
+        } else if (currentOperation === "minus") {
+          solution -= parseInt(el);
+        } else if (currentOperation === "multiplied") {
+          solution *= parseInt(el);
+        } else if (currentOperation === "divided") {
+          solution /= parseInt(el);
+        }
+      } else if (isNaN(parseInt(el))) {
+        currentOperation = checkOperatorForErrors(el);
       }
-    } else if (isNaN(parseInt(el))) {
-      currentOperation = checkOperatorForErrors(el);
+    } else {
+      throw new Error("Syntax error");
     }
   });
   return parseInt(solution);
@@ -49,11 +54,10 @@ const checkArrayForErrors = (array) => {
   if (
     array[0] === "What" ||
     (!isNaN(parseInt(array[lastIndex])) &&
-      !isNaN(parseInt(array[lastIndex - 1]))) ||
-      checkOperatorForErrors(array[lastIndex])
+      !isNaN(parseInt(array[lastIndex - 1])))
   ) {
     throw new Error("Syntax error");
-  } else if (!numberRegex.test(array.join(""))) {
+  } else if (!numberRegex.test(array.join("")) || array[lastIndex] === "cubed") {
     throw new Error("Unknown operation");
   } else {
     return array;
@@ -61,5 +65,7 @@ const checkArrayForErrors = (array) => {
 };
 
 const checkForRejects = (str1, str2) => {
-  return (typeof parseInt(str1) === typeof parseInt(str2))
-}
+  const string1 = isNaN(parseInt(str1));
+  const string2 = isNaN(parseInt(str2));
+  return !(string1 === string2);
+};
