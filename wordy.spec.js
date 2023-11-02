@@ -13,19 +13,19 @@ describe('Wordy', () => {
     expect(answer('What is 53 plus 2?')).toEqual(55);
   });
 
-  xtest('addition with negative numbers', () => {
+  test('addition with negative numbers', () => {
     expect(answer('What is -1 plus -10?')).toEqual(-11);
   });
 
-  xtest('large addition', () => {
+  test('large addition', () => {
     expect(answer('What is 123 plus 45678?')).toEqual(45801);
   });
 
-  xtest('subtraction', () => {
+  test('subtraction', () => {
     expect(answer('What is 4 minus -12?')).toEqual(16);
   });
 
-  xtest('multiplication', () => {
+  test('multiplication', () => {
     expect(answer('What is -3 multiplied by 25?')).toEqual(-75);
   });
 

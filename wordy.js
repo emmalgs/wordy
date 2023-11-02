@@ -26,7 +26,6 @@ export const answer = (string) => {
   // check if there is an operand, if not, parseInt number
   const indexOfNum1End = mathProblemArray.indexOf(operand[0]);
   const indexOfNum2Start = mathProblemArray.indexOf(operand[operand.length - 1]) + 1;
-  console.log(`index of num2 start: ${indexOfNum2Start}`)
 
   if (operand === "") {
     num1 = parseInt(mathProblemArray.join(""));
@@ -44,6 +43,12 @@ export const answer = (string) => {
       break;
     case "plus":
       solution = num1 + num2;
+      break;
+    case "minus":
+      solution = num1 - num2;
+      break;
+    case "multipliedby":
+      solution = num1 * num2;
       break;
     default:
       break;
