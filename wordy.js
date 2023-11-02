@@ -62,11 +62,19 @@ const mathmatize = (array) => {
       } else if (currentOperation === "dividedby") {
         solution /= parseInt(el);
       }
-      console.log(currentOperation)
     } else if (isNaN(parseInt(el))) {
-      currentOperation = el;
+      if (
+        el === "plus" ||
+        el === "minus" ||
+        el === "dividedby" ||
+        el === "multipliedby"
+      ) {
+        currentOperation = el;
+      } else {
+        throw Error("Unknown operation")
+      }
     }
   });
 
-  return parseInt(solution)
+  return parseInt(solution);
 };
