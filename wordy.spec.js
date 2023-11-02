@@ -5,11 +5,11 @@ describe('Wordy', () => {
     expect(answer('What is 5?')).toEqual(5);
   });
 
-  xtest('addition', () => {
+  test('addition', () => {
     expect(answer('What is 1 plus 1?')).toEqual(2);
   });
 
-  xtest('more addition', () => {
+  test('more addition', () => {
     expect(answer('What is 53 plus 2?')).toEqual(55);
   });
 
